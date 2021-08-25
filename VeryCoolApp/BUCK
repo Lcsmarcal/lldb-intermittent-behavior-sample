@@ -1,0 +1,81 @@
+apple_resource(
+    name = "VeryCoolAppResources",
+    visibility = ["PUBLIC"],
+    files = glob([
+        "**/*.xib"
+    ]),
+)
+
+apple_asset_catalog(
+    name = "VeryCoolAppAssets",
+    visibility = ["PUBLIC"],
+    dirs = ["Media.xcassets"],
+)
+
+apple_binary(
+    name = "VeryCoolAppBinary",
+    visibility = ["PUBLIC"],
+    srcs = glob(['**/Dummy.swift']),
+    deps = [":VeryCoolAppResources",
+            ":VeryCoolAppLibrary",
+            ":VeryCoolAppAssets",
+            "//VeryCoolLibrary:VeryCoolLibrary"],
+    configs = {
+      "Debug": {
+        "SWIFT_EXEC": "/usr/bin/true",
+        "CC": "/usr/bin/true",
+        "LIBTOOL": "/usr/bin/true",
+        "LD": "/usr/bin/true",
+        "LD_DEPENDENCY_INFO_FILE": "",
+        "LIBTOOL_DEPENDENCY_INFO_FILE": "",
+        "DEBUG_INFORMATION_FORMAT": "dwarf",
+      },
+      "Release" : {
+        "SWIFT_EXEC": "/usr/bin/true",
+        "CC": "/usr/bin/true",
+        "LIBTOOL": "/usr/bin/true",
+        "LD": "/usr/bin/true",
+        "LD_DEPENDENCY_INFO_FILE": "",
+        "DEBUG_INFORMATION_FORMAT": "dwarf",
+        "LIBTOOL_DEPENDENCY_INFO_FILE": ""
+      }
+    }
+)
+
+apple_library(
+  name = "VeryCoolAppLibrary",
+  visibility = ["PUBLIC"],
+  srcs = glob([
+    "**/*.swift"
+  ]),
+  configs = {
+      "Debug": {
+        "SWIFT_EXEC": "/usr/bin/true",
+        "CC": "/usr/bin/true",
+        "LIBTOOL": "/usr/bin/true",
+        "LD": "/usr/bin/true",
+        "DEBUG_INFORMATION_FORMAT": "dwarf",
+        "LD_DEPENDENCY_INFO_FILE": "",
+        "LIBTOOL_DEPENDENCY_INFO_FILE": ""
+      },
+      "Release" : {
+        "SWIFT_EXEC": "/usr/bin/true",
+        "CC": "/usr/bin/true",
+        "LIBTOOL": "/usr/bin/true",
+        "LD": "/usr/bin/true",
+        "DEBUG_INFORMATION_FORMAT": "dwarf",
+        "LD_DEPENDENCY_INFO_FILE": "",
+        "LIBTOOL_DEPENDENCY_INFO_FILE": ""
+      }
+    }
+)
+
+apple_bundle(
+    name = "VeryCoolApp",
+    visibility = ["PUBLIC"],
+    extension = "app",
+    binary = ":VeryCoolAppBinary",
+    product_name = "VeryCoolApp",
+    info_plist = "Info.plist",
+    info_plist_substitutions = {"PRODUCT_MODULE_NAME": "VeryCoolAppBinary"},
+)

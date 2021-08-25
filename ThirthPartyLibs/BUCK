@@ -1,0 +1,6 @@
+prebuilt_apple_framework(
+    name = "SDWebImage",
+    visibility = ["PUBLIC"],
+    framework = "SDWebImage/a990c053fff71e388a10f3357edb0be17929c9c5/Frameworks/SDWebImage.framework",
+    preferred_linkage = "static"
+)

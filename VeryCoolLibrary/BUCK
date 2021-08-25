@@ -1,0 +1,51 @@
+apple_library(
+    name = "VeryCoolLibrary",
+    visibility = ["PUBLIC"],
+    srcs = glob(['*.swift']),
+    tests = [":VeryCoolLibraryTests"],
+    modular = True,
+    deps = [
+      "//ThirthPartyLibs:SDWebImage"
+    ],
+    configs = {
+      "Debug": {
+        "SWIFT_EXEC": "/usr/bin/true",
+        "CC": "/usr/bin/true",
+        "LIBTOOL": "/usr/bin/true",
+        "LD": "/usr/bin/true",
+        "LD_DEPENDENCY_INFO_FILE": "",
+        "DEBUG_INFORMATION_FORMAT": "dwarf",
+        "LIBTOOL_DEPENDENCY_INFO_FILE": ""
+      },
+      "Release" : {
+        "SWIFT_EXEC": "/usr/bin/true",
+        "CC": "/usr/bin/true",
+        "LIBTOOL": "/usr/bin/true",
+        "LD": "/usr/bin/true",
+        "LD_DEPENDENCY_INFO_FILE": "",
+        "DEBUG_INFORMATION_FORMAT": "dwarf",
+        "LIBTOOL_DEPENDENCY_INFO_FILE": ""
+      },
+    }
+)
+
+
+apple_test(
+    name =  "VeryCoolLibraryTests",
+    visibility = ["PUBLIC"],
+    info_plist = "Tests/TestInfo.plist",
+    is_ui_test = False,
+    run_test_separately = True,
+    destination_specifier = {
+        "name": "iPhone 12",
+    },
+    frameworks = [
+        '$PLATFORM_DIR/Developer/Library/Frameworks/XCTest.framework'
+    ],
+    deps = [
+        "//VeryCoolLibrary:VeryCoolLibrary",
+    ],
+    srcs = glob([
+        "Tests/Sources/*.swift",
+    ]),
+)
