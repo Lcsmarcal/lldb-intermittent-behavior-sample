@@ -1,5 +1,3 @@
-![](images/cover.png)
-
 ## Setup
 What you’ll install:
 - Java 11;
