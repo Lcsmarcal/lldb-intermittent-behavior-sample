@@ -1,0 +1,71 @@
+[cxx]
+  default_platform = iphonesimulator-x86_64
+  cflags = -g -fmodules -fobjc-arc -w $(config custom.other_cflags)
+  cxxflags = -fobjc-arc -std=c++14 -D DEBUG -g $(config custom.other_cxxflags)
+  combined_preprocess_and_compile = true
+  pch_enabled = false
+  cache_links = false
+  cache_strips = false
+  ldflags = -Xlinker -objc_abi_version -Xlinker 2 -fobjc-arc -fobjc-link-runtime $(config custom.other_ldflags) -rpath /usr/lib/swift -L /usr/lib/swift
+
+[swift]
+  version = 5
+  compiler_flags = -DBUCK $(config custom.other_swift_compiler_flags) -Xcc -Wno-incomplete-umbrella
+  use_filelist = true
+  use_arg_file = true
+  code_coverage_enabled = true
+  add_xctest_import_paths = true
+  project_embed_runtime = false
+  use_debug_prefix_map = true
+  stdlib_tool_enabled = false
+  use_vfsoverlay = true
+  emit_swiftdocs = true
+  skip_prebuild_target_sufix = AppLibrary
+  transform_errors_to_absolute_paths = true
+  indexing_while_building = true
+  
+[apple]
+  default_debug_info_format_for_libraries = DWARF
+  default_debug_info_format_for_binaries = DWARF
+  use_swift_delegate = false
+  use_header_maps_in_xcode = false
+  generate_missing_umbrella_headers = true
+  iphonesimulator_target_sdk_version = 12.2
+  iphoneos_target_sdk_version = 12.2
+  provisioning_profile_read_command = security cms -Di
+  xctool_default_destination_specifier = platform=iOS Simulator,OS=latest,name=iPhone 6
+  xctool_path = tools/xctool/bin/xctool
+  xctool_stutter_timeout = 5000
+  should_link_system_swift = false
+  embed_xctest_in_test_bundles = false
+  xcode_build_script = Scripts/build_script.sh
+  xcode_lldb_remap_script = Scripts/lldb-remap.sh
+  use_modern_build_system = true
+  xcode_disable_parallelize_build = true
+  project_generator_index_via_build_flags = true
+  enable_project_v2_swift_tests_linking_sdkroot_fix = true
+  enable_project_v2_swift_indexing_fix = true
+
+[parser]
+  polyglot_parsing_enabled = true
+  default_build_file_syntax = SKYLARK
+
+[project]
+  ide_force_kill = always
+  project_schemes = true
+  target_schemes = true
+  ide = xcode
+  allow_symlinks = forbid
+  ignore = tools, \
+           .git, \
+           build, \
+
+[build]
+  threads = 12
+  allow_empty_globs = false
+
+[custom]
+  other_swift_compiler_flags = -DDEBUG -Onone -enable-testing -g -Xfrontend -warn-long-expression-type-checking=500 -profile-generate -profile-coverage-mapping
+  other_cflags = -fprofile-instr-generate -fcoverage-mapping
+  other_cxxflags = -fprofile-instr-generate -fcoverage-mapping
+  other_ldflags = -fprofile-instr-generate
