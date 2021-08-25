@@ -11,3 +11,12 @@ install_lldb_remap:
 xcode:
 	make clean
 	./buck project VeryCoolApp --experimental && open VeryCoolApp/VeryCoolApp.xcworkspace
+
+buck:
+	curl -L https://github.com/Lcsmarcal/lldb-intermittent-behavior-sample/releases/download/release/buck.pex --output ./buck
+	chmod u+x ./buck
+
+first_run:
+	make install_lldb_remap
+	make buck
+	make xcode
